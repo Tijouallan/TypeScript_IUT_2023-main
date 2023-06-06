@@ -1,0 +1,34 @@
+@startuml stationMeteo
+class  IObserver{
+   + changement(temperature: int, humidité: int)
+}
+
+class StationMétéo{
+- _temperature: number
+  - _humidité: number
+  - observers: IObserver[]
+  + constructor(temperature = 0, humidité = 15)
+  + get temperature(): number
+  + set temperature(temperature: number)
+  + get humidité(): number
+  + set humidité(humidité: number)
+  + toString(): string
+  - notifier(): void
+  + ajouterSubscriber(observer: IObserver)
+  + supprimerObserver(observer: IObserver)
+  }
+
+class AfficheurGraphique implements IObserver{
+- tabTemperature: 
+  - tabHumidité: Array<number>
+  + constructor(this.tabTemperature = [], this.tabHumidité = [])
+  + affiche(): void
+  + changement(temperature: number, humidité: number): void
+}
+class AfficheurTexte implements IObserver {
++ affiche(temperature: number, humidité: number): void
++ changement(temperature: number, humidité: number): void
+}
+IObserver --o StationMétéo : aggregation
+
+@enduml
